@@ -1,13 +1,13 @@
 import { drawCloth,drawWood } from "./table.js"
 import { Ball } from "./ball.js"
 import { clearCanvas } from "./canvas.js"
+import { balls } from "./setupBalls.js"
 
-const ball = new Ball({
-  pos: {x:400, y:300},
-  vel: {x:4, y:1},
-  color: "#e62636"
-})
+drawCloth()
+drawWood()
+balls.forEach((ball) => ball.draw())
 
+/*
 function loop(){
   clearCanvas()
   drawCloth()
@@ -17,4 +17,4 @@ function loop(){
   requestAnimationFrame(loop)
 }
 
-loop()
+loop()*/
