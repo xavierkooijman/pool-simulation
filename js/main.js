@@ -1,8 +1,4 @@
-// Accessing the canvas and context
-const canvas = document.getElementById("canvas")
-const ctx = canvas.getContext("2d")
+import { drawCloth,drawWood } from "./table.js";
 
-//Global variables
-const width = canvas.width;
-const height = canvas.height;
-
+drawCloth()
+drawWood()
