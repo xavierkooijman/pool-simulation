@@ -6,7 +6,7 @@ export function drawCloth(){
 }
 
 export function drawWood(){
-  ctx.fillStyle = "#994b4b"
+  ctx.fillStyle = "#84240c"
   ctx.fillRect(0,0,canvas.width,canvasMargin)
   ctx.fillRect(0,canvas.height - canvasMargin,canvas.width,canvasMargin)
   ctx.fillRect(0,0,canvasMargin,canvas.height)
