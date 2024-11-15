@@ -4,7 +4,7 @@ export class Ball{
   constructor({pos, color, vel}){
     this.pos = pos
     this.color = color
-    this.vel = vel
+    this.vel = vel ?? { x: 0, y: 0 }
     this.size = 18
     this.friction = 0.99
   }
@@ -56,4 +56,8 @@ export class Ball{
       this.vel.y = 0
     }
   }
+
+  get isIdle() {
+    return this.vel.x == 0 && this.vel.y == 0;
+}
 }
