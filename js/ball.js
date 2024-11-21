@@ -10,11 +10,29 @@ export class Ball{
   }
 
   draw(){
+    //Create ball light
+    const gradientLight = ctx.createRadialGradient(-0.4 * this.size, -0.4 * this.size,1,0,0,this.size)
+    gradientLight.addColorStop(0,"rgba(255,255,255,0.25)")
+    gradientLight.addColorStop(0.4,"rgba(255,255,255,0)")
+    gradientLight.addColorStop(0.7,"rgba(255,255,255,0)")
+    gradientLight.addColorStop(1,"rgba(255,255,255,0.01)")
+
+    //draw ball
+    ctx.save()
+    ctx.translate(this.pos.x,this.pos.y)
     ctx.beginPath()
-    ctx.fillStyle = this.color
-    ctx.arc(this.pos.x, this.pos.y, this.size, 0 , 2 * Math.PI)
+    ctx.arc(2, 2, this.size, 0 , 2 * Math.PI)
+    ctx.fillStyle = "rgba(0,0,0,0.15)"
     ctx.fill()
     ctx.closePath()
+    ctx.beginPath()
+    ctx.fillStyle = this.color
+    ctx.arc(0, 0, this.size, 0 , 2 * Math.PI)
+    ctx.fill()
+    ctx.fillStyle = gradientLight
+    ctx.fill()
+    ctx.closePath()
+    ctx.restore()
   }
 
   update(){
