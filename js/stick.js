@@ -6,20 +6,39 @@ export class Stick{
   constructor(ball){
     this.ball = ball
     this.directionVector = {x:0, y:0}
+    this.origin = {x:-975, y:-10}
     this.rotation = 0
-    this.power = 0.15
+    this.power = 0
     this.addStick()
     this.active = true
   }
 
   addStick(){
-    document.addEventListener("click", e =>{
+    document.addEventListener("keydown", e =>{
       if(!this.active) return
+      if(e.key === "w" && this.power < 0.6){
+        this.power += 0.05
+        this.origin.x -= 8
+      }
+    })
+
+    document.addEventListener("keydown", e =>{
+      if(!this.active) return
+      if(e.key === "s" && this.power > 0.04){
+        this.power -= 0.05
+        this.origin.x += 8
+      }
+    })
+
+    document.addEventListener("click", () =>{
+      if(!this.active || this.power == 0) return
       this.active = false
       this.ball.vel.x = 100*Math.cos(this.rotation)*this.power
       this.ball.vel.y = 100*Math.sin(this.rotation)*this.power
+      this.power = 0
+      this.origin = {x:-975, y:-10}
     })
-  }
+    }
 
   update(){
 
@@ -45,7 +64,9 @@ export class Stick{
       this.ball.pos.y + canvasNorm/directionVectorNorm * this.directionVector.y
     )
     ctx.stroke()
-    ctx.drawImage(img,this.ball.pos.x - 975,this.ball.pos.y - 10)
+    ctx.translate(this.ball.pos.x, this.ball.pos.y)
+    ctx.rotate(this.rotation)
+    ctx.drawImage(img,this.origin.x,this.origin.y)
     ctx.closePath()
     ctx.restore()
   }
