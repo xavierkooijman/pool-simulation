@@ -1,5 +1,6 @@
 import { canvasNorm, ctx } from "./canvas.js"
 import { mouse } from "./mouse.js"
+import { img } from "./stickImage.js"
 
 export class Stick{
   constructor(ball){
@@ -44,6 +45,7 @@ export class Stick{
       this.ball.pos.y + canvasNorm/directionVectorNorm * this.directionVector.y
     )
     ctx.stroke()
+    ctx.drawImage(img,this.ball.pos.x - 975,this.ball.pos.y - 10)
     ctx.closePath()
     ctx.restore()
   }
