@@ -32,11 +32,13 @@ export class Stick{
 
     document.addEventListener("click", () =>{
       if(!this.active || this.power == 0) return
-      this.active = false
-      this.ball.vel.x = 100*Math.cos(this.rotation)*this.power
-      this.ball.vel.y = 100*Math.sin(this.rotation)*this.power
-      this.power = 0
       this.origin = {x:-975, y:-10}
+      setTimeout(() =>{
+        this.ball.vel.x = 100*Math.cos(this.rotation)*this.power
+        this.ball.vel.y = 100*Math.sin(this.rotation)*this.power
+        this.power = 0
+        this.active = false
+      }, 30)
     })
     }
 

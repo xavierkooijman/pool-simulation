@@ -1,7 +1,7 @@
 import {ctx, canvas, canvasMargin} from "./canvas.js"
 
 export function drawCloth(){
-  ctx.fillStyle = "#3888ad"
+  ctx.fillStyle = "#437085"
   ctx.fillRect(0,0,canvas.width,canvas.height)
 }
 

@@ -69,7 +69,7 @@ export class Ball{
   handleSmallVelocities(){
     const limit = 0.04
 
-    if(Math.abs(this.vel.x) < limit || Math.abs(this.vel.y) < limit){
+    if(Math.abs(this.vel.x) < limit && Math.abs(this.vel.y) < limit){
       this.vel.x = 0
       this.vel.y = 0
     }
