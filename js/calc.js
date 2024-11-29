@@ -13,7 +13,7 @@ export function scale(r, v) {
   return { x: r * v.x, y: r * v.y };
 }
 
-// distance between two points
+// distance between two vectors
 export function distance(p, q) {
   return Math.sqrt(Math.pow(p.x - q.x, 2) + Math.pow(p.y - q.y, 2));
 }

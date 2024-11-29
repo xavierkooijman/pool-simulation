@@ -16,15 +16,15 @@ export class Stick{
   addStick(){
     document.addEventListener("keydown", e =>{
       if(!this.active) return
-      if(e.key === "w" && this.power < 0.6){
-        this.power += 0.05
+      if(e.key === "w" && this.power < 0.3){
+        this.power += 0.02
         this.origin.x -= 8
       }
     })
 
     document.addEventListener("keydown", e =>{
       if(!this.active) return
-      if(e.key === "s" && this.power > 0.04){
+      if(e.key === "s" && this.power > 0.01){
         this.power -= 0.05
         this.origin.x += 8
       }

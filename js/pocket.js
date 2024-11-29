@@ -1,3 +1,4 @@
+import { distance } from "./calc.js"
 import { ctx } from "./canvas.js"
 
 export class Pocket{
@@ -13,5 +14,9 @@ export class Pocket{
     ctx.arc(this.pos.x, this.pos.y, this.size, 0, 2*Math.PI)
     ctx.fill()
     ctx.closePath()
+  }
+
+  includes(ball){
+    return distance(this.pos,ball.pos) <= this.size
   }
 }

@@ -1,6 +1,7 @@
 import { canvas, canvasMargin, ctx } from "./canvas.js"
 import { balls } from "./setupBalls.js"
 import { add,sub,scale,distance,dotProduct } from "./calc.js"
+import { pockets } from "./setupPockets.js"
 
 export class Ball{
   constructor({pos, color, vel}){
@@ -9,9 +10,12 @@ export class Ball{
     this.vel = vel ?? { x: 0, y: 0 }
     this.size = 18
     this.friction = 0.99
+    this.inPocket = false
   }
 
   draw(){
+    if(this.inPocket) return
+
     //Create ball light
     const gradientLight = ctx.createRadialGradient(-0.4 * this.size, -0.4 * this.size,1,0,0,this.size)
     gradientLight.addColorStop(0,"rgba(255,255,255,0.25)")
@@ -38,10 +42,17 @@ export class Ball{
   }
 
   update(){
+    if(this.inPocket){
+      this.vel.x = 0
+      this.vel.y = 0
+      return
+    }
+    
     this.pos.x += this.vel.x
     this.pos.y += this.vel.y
     this.vel.x *= this.friction
     this.vel.y *= this.friction
+    this.checkPockets()
     this.handleSmallVelocities()
     this.bounceOfWall()
     this.ballCollisions()
@@ -87,9 +98,9 @@ export class Ball{
         if (dist > this.size + ball.size) return
 
         //pull balls apart when there is overlap
-        const L = this.size + ball.size - dist
+        const overlapDepth = this.size + ball.size - dist
         const x_d = sub(ball.pos, this.pos)
-        const c = scale(L / (2 * dist), x_d)
+        const c = scale(overlapDepth / (2 * dist), x_d)
         this.pos = sub(this.pos, c)
         ball.pos = add(ball.pos, c)
 
@@ -99,9 +110,17 @@ export class Ball{
         this.vel = sub(this.vel, w)
         ball.vel = add(ball.vel, w)
     })
-}
+  }
+
+  checkPockets(){
+    pockets.forEach(pocket =>{
+      if(pocket.includes(this)){
+        this.inPocket = true
+      }
+    })
+  }
 
   get isIdle() {
     return this.vel.x == 0 && this.vel.y == 0;
-}
+  }
 }
