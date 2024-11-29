@@ -91,7 +91,7 @@ export class Ball{
 
   ballCollisions() {
     balls.forEach((ball) => {
-        if (ball == this || this.inPocket) return
+        if (ball == this || this.inPocket || ball.inPocket) return
 
         //check for collision
         const dist = distance(this.pos, ball.pos)
@@ -100,13 +100,13 @@ export class Ball{
         const v_d = sub(this.vel, ball.vel)
         const x_d = sub(ball.pos, this.pos)
 
-        //pull balls apart when there is overlap
+        //pull balls apart when there is overlap codigo baseado neste video -> https://www.youtube.com/watch?v=Bd-8Vk8krog&list=PLo6lBZn6hgca1T7cNZXpiq4q395ljbEI_&index=8
         const overlapDepth = this.size + ball.size - dist
         const c = scale(overlapDepth / (2 * norm(x_d)), x_d)
         this.pos = sub(this.pos, c)
         ball.pos = add(ball.pos, c)
 
-        //elastic collision
+        //elastic collision formulas retiradas daqui-> https://drive.google.com/file/d/11HF7axwMdn4Yk78S_ZFbvZw2mVl-FpRX/view 
         const w = scale((1 / Math.pow(norm(x_d), 2)) * dotProduct(x_d, v_d),x_d)
         this.vel = sub(this.vel, w)
         ball.vel = add(ball.vel, w)
