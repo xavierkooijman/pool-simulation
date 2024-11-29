@@ -91,7 +91,7 @@ export class Ball{
 
   ballCollisions() {
     balls.forEach((ball) => {
-        if (ball == this) return
+        if (ball == this || this.inPocket) return
 
         //check for collision
         const dist = distance(this.pos, ball.pos)
