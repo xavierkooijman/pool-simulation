@@ -1,4 +1,6 @@
 import { canvas, canvasMargin, ctx } from "./canvas.js"
+import { balls } from "./setupBalls.js"
+import { add,sub,scale,distance,dotProduct } from "./calc.js"
 
 export class Ball{
   constructor({pos, color, vel}){
@@ -42,6 +44,7 @@ export class Ball{
     this.vel.y *= this.friction
     this.handleSmallVelocities()
     this.bounceOfWall()
+    this.ballCollisions()
   }
 
   bounceOfWall(){
@@ -74,6 +77,29 @@ export class Ball{
       this.vel.y = 0
     }
   }
+
+  ballCollisions() {
+    balls.forEach((ball) => {
+        if (ball == this) return
+
+        //check for collision
+        const dist = distance(this.pos, ball.pos)
+        if (dist > this.size + ball.size) return
+
+        //pull balls apart when there is overlap
+        const L = this.size + ball.size - dist
+        const x_d = sub(ball.pos, this.pos)
+        const c = scale(L / (2 * dist), x_d)
+        this.pos = sub(this.pos, c)
+        ball.pos = add(ball.pos, c)
+
+        //elastic collision
+        const v_d = sub(this.vel, ball.vel)
+        const w = scale((1 / Math.pow(dist, 2)) * dotProduct(x_d, v_d),x_d)
+        this.vel = sub(this.vel, w)
+        ball.vel = add(ball.vel, w)
+    })
+}
 
   get isIdle() {
     return this.vel.x == 0 && this.vel.y == 0;
