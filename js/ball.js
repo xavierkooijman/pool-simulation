@@ -97,15 +97,16 @@ export class Ball{
         const dist = distance(this.pos, ball.pos)
         if (dist > this.size + ball.size) return
 
+        const v_d = sub(this.vel, ball.vel)
+        const x_d = sub(ball.pos, this.pos)
+
         //pull balls apart when there is overlap
         const overlapDepth = this.size + ball.size - dist
-        const x_d = sub(ball.pos, this.pos)
-        const c = scale(overlapDepth / (2 * dist), x_d)
+        const c = scale(overlapDepth / (2 * norm(x_d)), x_d)
         this.pos = sub(this.pos, c)
         ball.pos = add(ball.pos, c)
 
         //elastic collision
-        const v_d = sub(this.vel, ball.vel)
         const w = scale((1 / Math.pow(norm(x_d), 2)) * dotProduct(x_d, v_d),x_d)
         this.vel = sub(this.vel, w)
         ball.vel = add(ball.vel, w)
