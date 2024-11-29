@@ -22,3 +22,8 @@ export function distance(p, q) {
 export function dotProduct(v, w) {
   return v.x * w.x + v.y * w.y;
 }
+
+// norm of a vector
+export function norm(v) {
+  return Math.sqrt(Math.pow(v.x, 2) + Math.pow(v.y, 2));
+}

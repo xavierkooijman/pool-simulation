@@ -1,6 +1,6 @@
 import { canvas, canvasMargin, ctx } from "./canvas.js"
 import { balls } from "./setupBalls.js"
-import { add,sub,scale,distance,dotProduct } from "./calc.js"
+import { add,sub,scale,distance,dotProduct, norm } from "./calc.js"
 import { pockets } from "./setupPockets.js"
 
 export class Ball{
@@ -106,7 +106,7 @@ export class Ball{
 
         //elastic collision
         const v_d = sub(this.vel, ball.vel)
-        const w = scale((1 / Math.pow(dist, 2)) * dotProduct(x_d, v_d),x_d)
+        const w = scale((1 / Math.pow(norm(x_d), 2)) * dotProduct(x_d, v_d),x_d)
         this.vel = sub(this.vel, w)
         ball.vel = add(ball.vel, w)
     })
